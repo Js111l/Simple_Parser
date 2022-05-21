@@ -19,12 +19,10 @@ public class Main {
         aa.setArgs(a);
 
 
-        for (String s : Tokens.result) {
-            System.out.println(s);
-        }
 
         aa.setNumbers();
 
+        System.out.println(Tokens.result);
 
 
     }
@@ -46,12 +44,12 @@ class Tokens {
     static String logicoperator = "[\\x26][\\x26]|[\\x7C][\\x7C]+";
 
 
-    static String [] args;
+    static String args;
 
-    static List<String> result = new ArrayList<>();
+    static Map <String,String> result = new TreeMap<String,String>();
 
     void setArgs(String nnn) {
-        this.args = nnn.split(" ");
+        this.args = nnn;
 
     }
 
@@ -83,27 +81,22 @@ class Tokens {
         list.add(bracket2);
         list.add(bracket3);
 
-        StringBuilder a=new StringBuilder();
 
+  String nazwa = args.trim();
+        sets(nazwa);
+    }
+    
+    void sets(String nazwa) {
+        while (!nazwa.equals(""))
         for (var i:list
-        )
-        {
-            Pattern pattern=Pattern.compile(i.s);
-            for (int m =0;m<args.length;m++)
-            {
-                Matcher matcher = pattern.matcher(args[m]);
-                if (matcher.matches())
-                {
-                    System.out.println(matcher.group() +" "+ i.s1);
-
-                }
-
+             ) {
+            Pattern pattern =Pattern.compile(i.s);
+            Matcher matcher = pattern.matcher(nazwa);
+            if(matcher.find()) {
+                result.put(matcher.group().trim(),i.s1);
+                nazwa=matcher.replaceFirst("").trim();
             }
-
         }
-        System.out.println(a);
-
-
     }
 
 
@@ -118,9 +111,8 @@ class token{
         this.s=a;
         this.s1=b;
     }
+   
 
 }
-
-
 
 
